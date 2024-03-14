@@ -1,0 +1,81 @@
+TUTORIAL 1 - MOVEMENT
+
+In this module I am creating a 3d runner game with collectables and obsticles.
+
+To begin we first need a surface our player can stand on, this is done by right clicking under the hirarchy tab > 3d objects > cube, we then transform it into our desired size through the inspectore tab under "transform". Now we need a model for our player, this is done by right clicking under the hirarchy tab > 3d objects > cube, we then add a Rigid body component so the cube is affected by physics allowing it to move.
+We can begin to add a script now to initiate movement in the cube,
+first we need to assign a variable to the rigid body component in c#, this allows us to easily reference the Rigid body component in our script
+
+this is done by writing: 
+
+public Rigidbody rb;
+
+
+
+We can now assign a base forward speed to our player like this:
+
+public float forwardForce = (desired speed)f;
+
+void FixedUpdate()
+{
+	rb.Addforce(0, 0, forwardForce * Time.deltaTime);
+}
+
+// The "=" makes the variables "forwardForce" and "sidewaysForce" to hold a speed by default when the programme starts
+// The speed is set to be a public variable which means that it can be viewed and changed within the unity engine,
+by setting the the value of the speed to be a float it allows us to be more precise and allows for smoother transitions when the speed changes,
+I also added an "f" after writing down the desired speed i want the player to go, this is so the script knows to default to unity's numbering system where less accurate numbers are needed than what you would find in a complex equation in c#, therefore requiring less time and computing power to opperate.
+// "Addforce" gives us the option to move the player in any of the 3 planes
+// "* Time.deltaTime" keeps experience consistent across different machines
+
+
+
+To add player input we can use a series of "if" statements that take key presses, this is done by:
+
+public float sidewaysForce = (desired speed)f;
+
+void FixedUpdate()
+{
+	if ( Input.GetKey("d"))
+        {
+            rb.AddForce(sidewaysForce * Time.deltaTime, 0, 0);
+        }
+	if ( Input.GetKey("a"))
+        {
+            rb.AddForce(-sidewaysForce * Time.deltaTime, 0, 0);
+        }
+}
+
+// "Input.Getkey" function allows us to relate a key press to an action in the script, here we assigned pressing the key "d" to move our player in the positive x axis and pressing "a" to move in the negative x axis
+
+
+
+Final script:
+
+
+using UnityEngine;
+
+public class PlayerMovement : MonoBehaviour
+{
+    public Rigidbody rb;
+    public float forwardForce = 1500f;
+    public float sidewaysForce = 1000f;
+
+    void FixedUpdate()
+    {
+        rb.AddForce(0, 0, forwardForce * Time.deltaTime);
+
+        if ( Input.GetKey("d"))
+        {
+            rb.AddForce(sidewaysForce * Time.deltaTime, 0, 0);
+        }
+
+        if (Input.GetKey("a"))
+        {
+            rb.AddForce(-sidewaysForce * Time.deltaTime, 0, 0);
+        }
+    }
+}
+
+
+

@@ -1,0 +1,35 @@
+//simple guide on crouching
+
+1. code
+
+// code for crouching character
+
+get rid of void start and before code update add: 
+
+public CharacterController PlayerHeight;             lets control height
+public float normalHeight, crouchHeight;             makes public flecible numbers for normal height and crouching height
+
+in void update add:
+
+if(Input.GetKeydown(Keycode.c))
+{
+PlayerHeight.height = crouchingHeight;               when you press c change to crouch position
+}
+if(Input.GetKeydown(Keycode.c))
+{
+crouchingHeight.height = normalheight;                when you press c change to normal position
+}
+2. attaching script
+
+give script to player 
+
+in player height drag player from hierachy
+
+in normal height set to 1
+
+in crouching height set to 0.8
+
+
+
+
+

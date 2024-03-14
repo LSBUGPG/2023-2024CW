@@ -1,0 +1,4 @@
+after writing code to pick up objects i assigned the inventory to the player and the collectable item script to the object. however when i went ti test my code to see if it was working the
+item wouldn't disappear when collided with. i had to do two things: give the object a box collider(hitbox) and turn is trigger on so that the collectable object script would work with the 
+object once collided with. after i did this the code was working and the item would disappear into the players inventory. this told me that there are other places that can go wrong when 
+writing a script outside of the script itself and i have to be careful to follow each step so that code work as intented.

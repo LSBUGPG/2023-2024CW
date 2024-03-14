@@ -1,0 +1,70 @@
+TUTORIAL 3 - COLLISION & UI
+
+In this script I used code that involves desplaying text on screen, because of this we need to include "using UnityEngine.UI" at the start of the script.
+I wanted the player to stop whenever an object was hit, whether it was the end of the level or an obstacle.
+This is the code I used to achieve this:
+
+
+public PlayerMovement movement;
+
+void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.tag == "Obstacle")
+        {
+            movement.enabled = false;
+        }
+        if (collision.collider.tag == "End")
+        {
+            movement.enabled = false;
+        }
+    }
+
+// "OnCollisionEnter" means that we are looking for an action to occur once an object had been hit 
+// I created a variable linking this script to the movement script which gives me the option to control the player movement in this script.
+// (collision.collider.tag == "") shows that an action should happen once the player collides with an object with certain tag, here being either the end or an obstacle.
+// By creating and applying a tag to object I can easily tell if the player made contact with any obsticle.
+// At the start of the game the player is moving by default, once the player hits an object the players movement stops, this is because we now made any movement present in the "PlayerMovement" script false.
+
+
+I also wanted it to be clear on whether you as the player beat the level or lost, which is where I needed to incorporate UI elements.T
+his is done by:
+
+	public GameObject Result;
+	void OnCollisionEnter(Collision collision)
+	{
+        	if (collision.collider.tag == "Obstacle")
+        {
+            Result.GetComponent<Text>().text = "GAME OVER!";
+        }
+        if (collision.collider.tag == "End")
+        {
+            Result.GetComponent<Text>().text = "LEVEL COMPLETE!";
+        }
+	}
+
+// "GetComponent" allows us to gain access to a game object outside this script, in this case it's a text box that displays "GAME OVER!" or "LEVEL COMPLETE!".
+
+Final script:
+
+using UnityEngine;
+using UnityEngine.UI;
+
+public class PlayerCollision : MonoBehaviour
+{
+    public PlayerMovement movement;
+    public GameObject Result;
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.tag == "Obstacle")
+        {
+            movement.enabled = false;
+            Result.GetComponent<Text>().text = "GAME OVER!";
+        }
+        if (collision.collider.tag == "End")
+        {
+            movement.enabled = false;
+            Result.GetComponent<Text>().text = "LEVEL COMPLETE!";
+        }
+    }
+
+}

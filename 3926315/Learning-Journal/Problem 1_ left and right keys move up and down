@@ -1,0 +1,7 @@
+I was following a tutorial on how to code movement on a 3d plane and while following the tutorial i had been following it very diligently and understood most components( those that i had seen before or not understood i searched their role in the code).
+i then ran into a problem that did not come to my attention because technically the coding was correct;when i went to test out how my coding faired i came to the realisation that my code for horizontal movements where making the sasme movements as the vertical.
+
+ transform.Translate(Vector3.forward * Time.deltaTime * speed * ForwardInput);
+ transform.Translate(Vector3.<forward> * Time.deltaTime * speed * HorizontalInput);
+what i hadn't realised is that when i had copied the similar code for the second transformation i forgot to change the directions for for the horizontal inputs meaning the function the exact same as the vertical movement code.
+i fixed that quickly by replacing forward in the second line with right just as the code from the tutorial i was following did (it could also be replaced with left)

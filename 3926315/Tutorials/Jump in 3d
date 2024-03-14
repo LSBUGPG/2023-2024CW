@@ -1,0 +1,57 @@
+# code on how to make 3d character jump
+
+# 1. make a new scene 
+
+in the hierachy right-click to add 2 3d objects: a cube and a 3d plane(name it ground)
+
+in the project right-click to create a new folder called scripts and open it up
+
+double-click the folder and right-click again and create a c# script and immediately name it 'Jump' (if you dont name it straight away it will automatically name the code'NewBehaviour' as well as setting the class to the name 
+causing problems with the programs ability to be recognise the code)
+
+click onto the cube look at the inspector and scroll all the way to the bottom and add component 'rigidbody' 
+
+#2. creating the code 
+
+open the c# script you just created 
+
+and add these lines befre void start:
+    public float JumpForce = 5.0f; 
+
+float is a non-fixed number. jumpforce just being the strength of the vertical motion which we set to 5.0, f just refering to it being a float
+    
+    public bool IsOnGround = true; 
+
+bool is a action that can either be true or false, in this case we are saying that the object -is- on the ground
+
+    private Rigidbody PlayerRb; 
+
+this applies a rigid body so that it cannot be deform that much or at all(PlayerRb is just the name we gave it so we can recognise it in the code)
+
+    void Start()
+       {
+           PlayerRb = GetComponent<Rigidbody>(); 
+       }
+
+before the first frame update get the component rigidbody 
+ if (Input.GetKeyUp(KeyCode.Space) && IsOnGround)  
+        {
+            PlayerRb.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
+            IsOnGround = false;
+        }
+this code is saying if the input of the boect is up and is on ground the add force to the rigidbody (on the xyz axis) up, and instantly applied a force based on the timestep
+finally make is on ground false 
+ private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+
+        }
+        IsOnGround = true;
+    }
+when 2 objects like the 3d plane and cube make contact enter collison. if it collides with the gameobject called ground make is on ground true
+
+
+
+
+

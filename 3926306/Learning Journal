@@ -1,0 +1,164 @@
+5th December - 13:31
+
+GitIgnore File failed to track only certain files.
+
+What does this mean?
+Github and Gitignore allowed certain files which would normally be ignored during a push to git. The most notable and problematic of which was a unity libray folder. In which it attempted to push every single file within the folder.
+Even having resolved the issue I am unaware if any other files/folders were also attempted to be pushed. This is due to the need to recognise the files from an extraordinaryly long list. (This is resolved as well)
+
+Possible causes: (I resolved each of these assuming they were the problem in order to be sure it wouldn't continue affecting the project)
+GitIgnore file was in the wrong folder- Believed it was this since it was in the cloned repository folder rather than within the unity project
+Human error made when cloning the repository- Believed it could've been this since it was unlikely to being anything download such as corruption or an incomplete download related. I had pulled a different project not long before this, thus the belief that this was a human error.
+
+The human error refers to the repository being cloned into the wrong place.
+
+
+How did I resolve it?
+To resolve it I first spent some time to figure out how the gitignore file work largely by following whats written on github about it this was found by a simple google. During this process I saw that some people have had this issue in the past and had to rewrite the gitignore file.
+Additionally I saw there were a few other solutions which seemed to relate more to my issue and possible causes. These being the possible causes listed above. 
+My first step: (this step should have been done later within the resolving process since it ignores a very easy potential fix and in this case the correct one)
+I first recloned the repository into the correct position. This took multiple attempts due to me misreading the where the project was. To do this I made use of github desktop and cloned it thorugh file clone repository. Putting it in the correct location.
+This had very little to no affect. 
+The second and ultimately the correct fix was to simply move the gitignore file into the unity project folder.
+
+
+5th December - 15:23
+Input Manager not taking any input 
+
+What does this mean? 
+The script Input Manager was used as a central point to retrieve inputs for all scripts. This however requires the InputSystem package add on to operate and a part of the package is where the problem was. 
+The InputSystem I was using allowed for me to set the keybinds within a section called action under an action map. 
+
+Cause: Calling upon the wrong part of the system with the code. Instead of calling for the action WASD, and thus the keybinds I called upon the Action map which I called PlayerMovment meaning that it wouldn't be acess the keybinds making it so that the player cannot move.
+Additionally I wasn't calling the Input full stop since I misspelt the name I had assigned it. This being PLayerControls. I instead typed PlayerControls. Another misspelling was PlayerMovement since it should have been PlayerMovment.
+
+To resolve it I went to the line of code that was causing the issue this being: (this was easy to find since it is the only line that refers to keys)
+PlayerControls.PlayerMovement.performed += i => movementInput = i.ReadValue<Vector2>();
+I quickly noticed the misspelling with PlayerControls and rectified it turning it to PLayerControls allowing for it to call upon the Input system. Additionally to let it call upon the Action map I needed to recitfy the spelling misktake that was PlayerMovement changing it to PlayerMovment.
+This however didn't work much to my confusion at the time before realising that I wasn't calling on any actions. Thus WASD (the name of the keybind action) was added to the to the part where the Input system was getting called. 
+Leading to the the working code of 
+PLayerControls.PlayerMovment.WASD.performed += i => movementInput = i.ReadValue<Vector2>();
+
+
+5th December- 16:05
+Character falling through the floor
+
+What does this mean?
+The character would slowly fall through the floor after unity was moved into playmode. Due to it not continously checking for a collision.
+
+Cause: Collison Detection was not set to continous.
+
+To resolve it took surprisingly long as I at first believed it was an issue with the code especially within the PlayerLocomotion script since this was the only script to touch the y axis. However after viewing it I realised it had nothing which would lead to it.
+Leading me to check the inspector and more importantly the rigidbody. This is where I realised the cause and rectified it by changing the Collision Detection setting from Discrete to Continous.
+
+For Future reference:
+Check the inspector first and make sure the Collison Detection is on the correct setting.
+
+6th december - 9:45
+Camera remains static
+
+What does this mean?
+This means that no matter the input given the camera will remain static.
+
+Cause:missed capitalisation of function
+
+To resolve this I first went about checking inspector to make sure the cameras public variables were assigned correctly. Seeing that they are all assigned correctly I moved onto the code.
+I first checked the CameraManager script to see if there was anything wrong particularly these two blocks:
+ rotation = Vector3.zero;
+        rotation.y = lookAngle;
+        targetRotation = Quaternion.Euler(rotation); 
+        targetTransform.rotation = targetRotation;
+
+rotation = Vector3.zero;
+        rotation.x = pivotAngle;
+        targetRotation = Quaternion.Euler(rotation);
+        cameraPivot.localRotation = targetRotation;
+
+seeing as how this controlled the rotation, and it was my belief that I didn't assign the variables correctly. However I failed to see anything that would make me think it wouldn't rotate. (there was a mistake but it didn't have anything affect and I hadn't noticed it yet)
+Since it was wasn't a variable mix up I believed it must have been an input issue. Since if it isn't the block doing it, it's likley the block on how its done. Making me check the PlayerManager script since that acted as the final input system for the camera. 
+This is where I noticed the only function type that didn't have a capital letter was LateUpdate something I quickly rectified.
+
+For future reference all function types are in capital letters.
+
+
+6th december - 10:11
+
+Camera not rotating horiziontally
+
+What does this mean?
+The camera is still able to rotate/move vertically however it is unable to move when it comes to horiziontal movements.
+
+To resolve this I first checked this block of code:
+rotation = Vector3.zero;
+        rotation.y = lookAngle;
+        targetRotation = Quaternion.Euler(rotation); 
+        targetTransform.rotation = targetRotation;
+since this is the code that controls the horiziontal movement. I decided to use this version as reference:
+rotation = Vector3.zero;
+        rotation.x = pivotAngle;
+        targetRotation = Quaternion.Euler(rotation);
+        cameraPivot.localRotation = targetRotation;
+since the vertical movement was working and the only differences are the rotation.y/x and the name of the variables that are turning. As such I quickly dismissed the likelyhood of it being the rotation.y/x since this was required for the different directions.
+So I looked at the named variables and realised that targetTransform was typed instead of a simple transform. This caused issues because the variable targetTransform was set to be linked to anything with a PlayerManager script on the line  targetTransform = FindObjectOfType<PlayerManager>().transform;.
+Since the PlayerManager script wasn't set to the camera, the targetTransform variable would have no affect on it. As such for the camera to be affected a simple transform was required since this script would be on the game object it would be affecting. 
+Otherwise like the cameraPivot it would require its own variable name.
+
+6th december - 11:51
+player could still move when game over UI was active 
+
+What does this mean?
+After the timer runs out it activates the game over UI which just contains a reset button. Howerver the player is still able to move around the scene and collect points to alter their score.
+
+Cause:lack of code to control the flow of time. 
+
+To resolve this I attempted to make a pause timer underneath the live and over function this was done by trying Timescale = 1f; and Timescale =  0f; respectively. This however didn't work since it didn't contain everything it needed.
+So in order to figure it out I went to the unity manual and looked for pausing the game as well as Timscale only to eventually through the Timescale search discover the need for time. infront of timescale. leading to the resolve of the issue.
+
+6th december - 11:55
+reset doesn't reset timer/code.
+
+What does this mean?
+After the timer runs out and the reset button is pressed, it successfully reloads the scene however it doesn't reset the timer nor can the player move.
+
+cause: start function needed to be an awake, and there was no line of code that reset the timer count to it max value.
+
+To resolve this I went to the scene reload block, this being:
+public void RestartButton()
+    {
+        
+        SceneManager.LoadScene("SampleScene");
+    }
+
+However this block only contained the minor issue of not having a method to turn the game over UI off something I recitifed by adding Live(). This however did not solve the overarching issue of reseting the timer and movement.
+Seeing that the addition of the function Live() was able to help reset the game over UI to being back off until the timer reached zero. This however was still temporarly impossible due to the timer not being reset. 
+Additionally it also being the effectively play state of the game whilst Over was meant to be a simple UI. Allowed for me to believe that once Live was called it would reset the timer and movement. So I put Live() into the start function. Only for it make no difference.
+This is because there was still no line of code that actually reset the and causing the over function to be constantly called leading to the game to be paused thanks to the previous fix. This mistake however did help me realise that I needed a reset line. I also attempted switching to awake believing that
+getting the function called when intialised would help remedy that issue. It did not.
+At first I thought of putting it in the over function area however I stopped when I realised that the over function ends as soon as the scene is reloaded. This meant that it should only be in Live and since I could then use it to update the awake function thanks to the previous attempt. I would be able to get it operating in the game.
+But before I could write the line I needed a variable I could call upon to use as a reset. As such I created a variable in a serialised field called maxTime. This variable acts as the baseline for what the time should start and thus what the time variable would need to be equal to. which I then used in these lines of code: S
+Fill.fillAmount = time / maxTime; and time = maxTime; 
+
+Fill.fillAmount = time / maxTime is used for the decreasing of the circle UI.
+
+I knew I needed to use the MaxTime variable to have the time variable, which is linked to the text of the timer, equal it leading to me making:
+
+Whilst time = maxTime within the Live() function so it looked like this:
+void Live()
+    {
+        CountDownCanvas.SetActive(true);
+        GameOverCanvas.SetActive(false);
+        GameIsOver = false;
+        Time.timeScale = 1;
+        time = maxTime; 
+    }
+
+
+
+
+
+
+
+
+
+
+

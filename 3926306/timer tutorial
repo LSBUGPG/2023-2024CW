@@ -1,0 +1,120 @@
+This tutorial aims to help you understand how to make a timer with a circle decreasing as an indicator of how long you have left. Whilst still having text. Additionally it will put the player on a game over screen once it 
+reaches zero.
+
+
+To begin with your timer there are several requirements:
+You have a not filled in circle this means the part which you would colour is transparent.
+You have a different circle that is filled in but is white.
+Both must be done on a transparent background.
+
+These can be done in photoshop if you have it or photopea or any applicable software.
+
+
+STEP 1 setting up the UI-Install 
+Your first step to setting up the UI is install TextMeshPro. We will be using textmeshpro later for the restart button so its helpful to download early so we can jump right into it
+To do this you must click on windows then Package Manager 
+Once you have the package Manager open use the search bar to search for TextMeshPro and press the install button. 
+If it asks you do not need to get the extra additions.
+
+Step 2 setting up the UI
+
+Timer-how to make the timer
+To begin setting up the UI click on gameObject then search down the list until you see UI at which point click on UI then on canvas. Rename this canvas to UI.
+Right click on the UI canvas and go down to UI and press canvas again. Name this one Countdown.
+Then right click on Countdown then select UI - Image. Name this one timer.
+Additionally put the non-filled circle into its source image. This is because the filled image will be put over the top but as the filled image timer slowly decreases it will releave the transparent fill
+Next right click on timer and select UI- Image and name this one fill and put the filled image on the source image.
+Next right click on timer again and select - UI legacy text. name this just text and type into the text box in the inspector who long you want the timer to last for me I typed 60.
+
+GameOver-how to make the game over screen
+To begin setting up the game over screen you must first right click on the UI canvas in the hierarchy and go down to UI then select canvas. Name it GameOver
+Then right click on the GameOver canvas and select button (textmeshpro one) this will give you both a working button, which you should name its job for its restart but it can be quit or main menu, and modifiable text as a child.
+To change the text have the button show its children to do this press on the little down arrow (next to its name) after selecting it. I changed mine text to say restart.
+Lastly click on GameOver, and in the inspector next to its name at the top is a small tick box which you need to untick.
+
+
+Step 3 Arrange the UI
+To do this double click on the original UI canvas this will take you to the large UI section, if it doesn't, zoom out alot. 
+then using the move tool arrange everything how you wish it to look.
+
+
+Step 4 Code: Using
+Create a C# script by right clicking on the libary within the projects window. You can name it how you wish but I named mine CountDownTimer.
+Once you open the file go to the section at the top which has a group of using lines. Replace  using System.Collections to using TMPro; and replace System.Collections.Generic with using UnityEngine.SceneManagement;
+and one line below add using UnityEngine.UI;
+
+The reason we did this is so that C# know what we are going to be trying to use and will grant us access to the methods to create them.
+
+
+Step 5 Code: Variables
+The first variable we have to add is a [SerializeField]. A [SerializeField] is a attribute that keeps the variable private meaning it can't be called in other scripts. But it can be altered within the Inspector like a public variable.
+The variable is: [SerializeField] float maxTime = 60f; what this does is acts as the maxTime of the timer so when the timer needs to be reset this is called.
+So we have the maxTime what about the normal time. This is the way to write that variable: private float time; since the time variable, will be calulated adding a value to it now would be pointless and likely counter productive.
+
+Now the remaining,but one, variables are the UI pieces we just put together. Turning these into variables are simple all you have to do is:
+    public Text TimerText;
+    public Image Fill;
+    public Button Restart;
+    public GameObject GameOverCanvas, CountDownCanvas;
+These are option because we told C# that we are using Unity.UI;
+
+The last remaining variable is:
+public static bool GameIsOver = false;
+
+Step 6 Code: Awake
+
+So before any of the rest of the script can continue we must have two lines can as soon as its intialised thus the use of the Awake function. The two lines are that once the timer = 0 the game is over and the other one is calling the live function which have yet to write.
+To it we have to first make the function to do this just replace start with awake , then the lines themseleves so lets begin with writing the GameOver script, then the Live function next. 
+public void Awake 
+{
+    GameIsOver = (time == 0);
+    Live();
+}
+
+
+STEP 6 Code: Update
+The update within the script must keep changing the timer and the amount of fill within the circle timer.  This is how it is done:
+ void Update()
+    {
+        time -= Time.deltaTime; // the line that doesn't make it go by framerate but realworld time.
+        TimerText.text = "" + (int)time; // the line that modifies the number within the text
+        Fill.fillAmount = time / maxTime; // the line that modifies the amount of fill
+
+        if (time <= 0) // The screen that leads to gameOver since the time equals zero
+        {
+            Over();
+        }
+    }
+
+STEP 6 Code: Over
+Since we have now identified/written the cause for a game over screen we now need to implement it within the code. This is how I did it:
+void Over()
+    {
+        GameOverCanvas.SetActive(true); //actives the gameOver canvas and children bringing the restart button to the screen
+        CountDownCanvas.SetActive(false); //removes the timer from the screen the moment it reaches zero
+        GameIsOver = true; //requirement for the bool to work, this tells Unity the state the game is in which is GameIsOver
+        Time.timeScale = 0; //used to pause the game to the player can't keep controlling the character. 1 is normal speed.
+    }
+
+
+
+Step 7 Code: Live
+The live is the game is "play mode" this is the reason why the Live function is called within the Awake function. Since the Live function is effectively the opposite of the Over function then its code is very similiar:
+void Live()
+    {
+        CountDownCanvas.SetActive(true);
+        GameOverCanvas.SetActive(false);
+        GameIsOver = false;
+        Time.timeScale = 1;
+        time = maxTime; // This resets the number to 60 rather keeping it at zero since it wouldn't have a chance to reset it.
+    }
+
+STEP 8 Code: Restartbutton
+The last function is for the restart button and is simply the command to load a scene pointed at the game scene.
+public void RestartButton()
+    {
+        Live(); //resets the live
+        SceneManager.LoadScene("SampleScene"); //this will reload the scene the game takes place in since the entire game is built into the SampleScene. This could lead to a main menu simply by changing scene name or you could have it close the program by Application.Quit.
+    }
+
+And there you have a working timer and game over screen with a restart button.

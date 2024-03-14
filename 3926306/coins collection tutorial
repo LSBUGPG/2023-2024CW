@@ -1,0 +1,63 @@
+This tutorial aims to help make a basic coin collection system.
+
+To create a coin collection system you first need points.
+
+for the sake of demonstration I am using simple unity sphere with a yellow material. This is what I am talking about when I refer to coins.
+
+
+Step 1 making the coins
+To create the "coins" click on GameObject and the top of unity.  Then go down to 3d object, then click sphere,
+to give it a more coin look you can create a yellow material by right clicking in the libary then left clicking create then material. Once you have the material you can change the colour by clicking on the material and in the inspection menu named albedo contains the colour wheel change it to whatevr colour you wish.
+Additionally the coins are going to require a  bit of physics so click on the coins then go to the inspector and click add component. Once your there search for a rigidbody.
+Make sure that their gravity it turned off by clicking the tick box and that their Collision Detection is set to continous. Also make sure that the Is trigger is ticked.
+
+Step 2 UI
+Now that we have the coins we need a way to display them once they are picked up. To do that we need to create UI 
+To do this we must click on right click on the hierarchy then go down to UI then go to canvas and name it UI (this does not apply if you followed timer tutorial)
+Then right click on UI go down to UI and click Text (textmeshpro) (this line applys to those that did the timer tutorial)
+if it asks you to install accept. If it doesn't ask then go this path windows->PackageManager-> search bar as long as it says unity registry not in project. change it to say unity registry if it doesn' say it.-> Search TextMeshPro->Install then repeat last line
+Rename the text in the hierarchy to ScoreText and in the text box in ScoreText's inspector change it to saying score:0
+
+
+Step 3 code
+Create a C# script in the libary and name it ScoreSystem. Once you have opened the file add:
+using TMPro 
+This is to let Unity know that you are using the text mesh pro addon package.
+
+Next we are going to add the first variable which is the score. To do this we type:
+private int Score = 0; //int is what allows the number to be updated since int means integar.
+
+The next variable  we are going to add is the text. Since we are using TextMeshPro there are some differences to what you would traditionally write:
+public TextMeshProUGUI ScoreText; //the main difference being TextMeshProUGUI this is because TMPro has several interal systems such as this one in order for it to work as intended.
+
+Now that we have our variables we need a function in order to put them in use. And since this script needs to activated when the colliders collide then the function you use is:
+private void OnTriggerEnter(Collider Player) //can be other instead of player just be sure to replace the other players with other as well.
+
+and since we need an affect that is triggered if the colliders touch an if statement is required. So for this line it would be: Next we need score to add to itself 
+if(Player.transform.tag == "Points")
+{
+  
+}
+
+next add score addition so that the score can go up:
+if(Player.transform.tag == "Points")
+{
+   Score++;
+}
+
+after that add the update to  the score text:
+if(Player.transform.tag == "Points")
+{
+   Score++;
+   ScoreText.text = "Score: " + Score.ToString();
+    
+}
+
+And lastly add the destroy function to give the illusion of picking up the coin
+ if(Player.transform.tag == "Points")
+        {
+            Score++;
+            ScoreText.text = "Score: " + Score.ToString();
+            Destroy(Player.gameObject);
+        }
+

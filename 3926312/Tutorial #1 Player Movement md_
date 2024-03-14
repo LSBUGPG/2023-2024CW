@@ -1,0 +1,47 @@
+### Tutorial #1 for Player Movement
+
+Create a new Unity project:
+Open Unity, create a new 3D project, and set up your scene with a character model.
+
+Add a Rigidbody component:
+Attach a Rigidbody component to your character GameObject to enable physics interactions.
+
+Write a simple script for movement:
+Create a new C# script (e.g., PlayerMovement) and attach it to your character GameObject. Open the script in your preferred code editor.
+
+Write the movement code:
+
+https://github.com/Seckosaho12/Little-Runner/issues/3#issue-2023815282
+
+
+Configure input settings:
+
+Go back to Unity, and make sure you have set up your input settings. Go to "Edit" -> 
+"Project Settings" -> "Input Manager." Ensure that the "Horizontal" and "Vertical" axes
+are defined (they usually are by default for keyboard input).
+
+Adjust speed and test:
+
+In the Inspector window for your character GameObject, you will now see a "Player 
+Movement" script component. Adjust the speed parameter to your liking. Play the 
+scene and test the movement using arrow keys or WASD.
+
+
+This is a simple example using the Translate method to move the character based on user input.
+Depending on your game's requirements, you might need more complex
+movement, animations, or collision handling. But this should give you a 
+straightforward start for character movement in Unity.
+
+
+
+
+
+
+
+
+
+
+
+
+
+

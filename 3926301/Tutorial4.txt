@@ -1,0 +1,60 @@
+TUTORIAL 4 - SCORING & UI
+
+In this script I also have a UI element which is why I add "using UnityEngine.UI" at the start.
+
+To keep track of how many coins we get, we need to create a variable that stores that data.
+which is shown like this:
+
+public int coins = 0;
+
+// I used int because we can only get a whole number of coins.
+// The value of coins is 0 when we start as we havent collected any yet.
+
+We then add an "OnTriggerEnter" function so our player reacts with the coin. We also need to make sure the "is trigger" box is ticked under the collider menu for the coin in unity. Similar to the last tutorial, if the player makes contact with the coin an action is carried out, in this case we gain a coin.
+here I wrote the code for the player gaining points everytime they went through a coin:
+
+public int coins = 0;
+
+public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Coin")
+        {
+            coins = coins + 1;
+            Destroy(other.gameObject);
+        }
+    }
+
+// "other.gameObject.tag == "Coin"" means that the script is constantly checking if the player goes through an object with the "Coin" tag enabled.
+// Once the player passes through a coin, their total points go up by one as shown in the line "coins = coins + 1"
+// After the player has collected the coin, the coin gets "destroyed" where you can no longer pick up or see that same coin.
+
+The UI aspect of the score is similar to the last tutorial where we use the "GetComponent" function to access a text game object outside the script to display the score, however unlike the "GAME OVER!" and "LEVEL COMPLETE!" screen, it is constantly updating as you play, whilst the last tutorial marks an end of a run.
+to show a changing score we use:
+
+scoreText.GetComponent<Text>().text = "Score: " + coins;
+
+// the number of coins what we have at a time changes as we collect more which is why we made it a variable at the end of this line rather than a quoted text.
+// As you collect more coins, the score goes up by 1 each time.
+
+Final script:
+
+using UnityEngine;
+using UnityEngine.UI;
+
+public class CollectingCoin : MonoBehaviour
+{
+    public int coins = 0;
+    public GameObject scoreText;
+   
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Coin")
+        {
+            coins = coins + 1;
+            scoreText.GetComponent<Text>().text = "Score: " + coins;
+            Destroy(other.gameObject);
+        }
+    }
+
+
+}

@@ -1,0 +1,3 @@
+ if (Input.GetKeyUp(KeyCode.Space) && IsOnGround)_)_
+originally my code looked like this with two brackets at the end and c# kept telling me the code from && was wrong and i spent a long time wondering what is was i did wrong. initally i thought the problem was the code i got from the video i was following however i simply 
+added too many brackets at the end that weren't necessary.

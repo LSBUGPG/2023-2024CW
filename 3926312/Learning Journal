@@ -1,0 +1,29 @@
+Learning Journal 
+
+-	17-10-2023
+I have found a tutorial that will help me create and FPS moving character that will be able to move in every direction while the camera follows him ad also I will try to make a jumping component,
+I have encountered my first issue instead of using the right quotes I’ve use the wrong ones therefor I wasn’t able to continue forward with my work  but 
+I  realized it was an issue with my keyboard setting which I have fixed and it shouldn’t give me anymore trouble. –
+Second issue I have come across is I forgot to close the quote in the run speed and my character wasn’t able to move but once I found out what the issue was, I fixed it. 
+
+-	21-10-2023
+Update progress: I’m making good progress so far in my FPS controller, I have just completed the camera movement and the jumping.
+I went through some major issues while creating the code I didn’t know how to compose the script for the  
+
+-	25-10-2023
+About the project that I was working on I had some issues following the tutorials, so I decided to start with another project, 
+this time around I decided to focus on a level game with a main person and enemies that when they get touched by the player,
+first component I made is the movement Code to allow my player to move from left to right and forward and backwards,
+I didn’t have any issues creating this component as the tutorial was very straight forward and easy to make.
+
+-	14-11-2023
+I have managed to complete the game by now and I’m currently working on the four components tutorial, 
+I have decided to talk about the proceed of me making the player movement as the first part of the tutorial,
+the second part of the tutorial will be about collectible items in my game I added coins for the player to be collecting along the game.
+I also added a coin counter on the top left corner that counts how many coins you have gotten, the third tutorial will be about the Player life in for this component.
+I worked on the players health every time the player touches the enemy it dies and if the player falls off  the platform it dies as well but it respawns to the start point,
+the last tutorial is about the moving platforms, I added moving platforms to my game to make it harder for the player in each level.
+The video that I uploaded in GitHub of my game you can see how the difficulty increases after the first level and how the platform moves changes from left to right to up and down.
+
+
+

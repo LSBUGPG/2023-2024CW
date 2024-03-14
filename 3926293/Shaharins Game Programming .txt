@@ -1,0 +1,8 @@
+Shaharin Gani Rashid - Pinball Game
+--------------------------------------------------------------------------
+In the link the following is inlcuded
+	- A learning Journal
+	- 4 Tutorials
+	- A playthrough video of all the feautres present within the game
+
+Pinball Game: https://github.com/sgr24/Shaharin-Pinball-Game

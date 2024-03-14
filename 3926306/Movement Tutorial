@@ -1,0 +1,208 @@
+This is a 3rd person movement tutorial making use of the unity input system add on. (The code was taken from Sebastian Graves  https://www.youtube.com/watch?v=suU4aBdBjKA&list=PLD_vBJjpCwJsqpD8QRPNPMfVUpPFLVGg4&index=3 )
+                                                                                                                               https://www.youtube.com/watch?v=_tYF5VAJdQ4&list=PLD_vBJjpCwJsqpD8QRPNPMfVUpPFLVGg4&index=2
+This tutorial will be walking you through every step whilst explaining each step in as much detail as possible.
+
+Before this tutorial can begin it is important to explain the difference between Unity's Inputsystem and the Inputmanager.
+The unity Inputmanager is a built in system which to call upon you would use code such as GetKeyDown or KeyCode and Input.GetButtonDown which can be used to assign keys, controller/gamepad bindings as well as vr and ar. joysticks and lastly touch screens.
+
+Whereas the Inputsystem is a package addon that uses a popup to assign keys within an action map, these assignments are added in the actions sections, and you then call upon either the actions. Which can contain multiple keys such as in this tutorial or the entire action map.
+
+STEP 1 setting up the input system
+The very first thing you want to do is open the unity project and go to the windows tab at the top and select package manager. This is so that we may install the inputsystem that we will be using for this tutorial. 
+
+Once in package manager:
+Make sure at the top of the manager it says package Unity Registry instead of package in project.
+Then using the search bar search for InputSystem. once you have found it click install which resides in the bottom right of the window. Then wait until it has finished.
+
+Outside of package manager:
+Once it has right click within your libary (this is within your project window) and click/hover on create. Once you have done that you move your cursor down until you get to InputActions which you click. You may name it however you wish but I called it playerControls.
+additionally right click within your libary  and click/hover create then click Folder and name this one scripts. then drag and drop playerControls into it.
+
+within the Input system:
+double click on playerControls this will open up a popup window. In which you will see that the Input system is split into three different catergories. 
+The first being action map: This is the overarching input in which acts as the connection between the actions. This is effectively the what is happening since this is used to combine all the actions into something cohesive and effective.
+The second being actions: This is where we will be assigning our keys/controls in and this area is effectively the where/when it happens since this is where the keys inputs will be registered and when those keys are pressed these actions will be called on.
+The third section are the action properties:This is where you will assign how the actions work and what type of actions will be used. Think of this as the why and how since this is the reason why the input system works whilst how the key are assigned to useful positions.
+
+So the first thing you will want to do is go to the action map section and click on the cross. This will add a new action map. You can name it whatever you like but remember this is what is happening. I named mine PlayerMovement.
+As you would have noticed when you click on the cross the actions and actions properties also gained some new additions. Firstly click on the drop down arrow(arrow facing down) on the new action here you will see a action called <no binding>. Delete it. The reason why is because this is their is a more effective method for our bindings.
+Once you have deleted the binding double click on the action and rename it whatever you like. I named mine WASD. Once you have finished renaming it go to the action properties section. 
+Change action type to pass through and then control type to vector2 since in this tutorial we will only be working on 2 axis and not all three. If you wish your character to jump or fly then use vector3 since it will give you extra options for that.
+Once you have done this click on the cross and click up\down\left\right compsite. Then click on the up binding and go to properties (Do NOT click T) click the empty bar then search W (look for the one with Keyboard) then do the same for the rest of the bindings so that A, S, D correlates to  left, down, right. Or you can use different keys if you wish.
+Once you have completed that close the Inputsystem whilst making sure to save it. Then on the right hand of your screen click the tickbox for generate a C# class. This will generate a C# script that you do not need to open for this tutorial.
+
+
+STEP 2 Creating an Input Manager (note that it is likely you will have a error within this creation process please wait till the end before debugging.)
+This is the script in which we will be calling the Input system (Please note evrey time you create a variable you must put it on a new line)
+
+Within the scripts folder: 
+So create a new C# script the same way you created a folder previously but instead click on  C# scripts. Name this one InputManager (spacing and capitalisation is important)
+open this script in visual studio by double clicking it.
+Delete public void start and public void update (you will do this for each script as well so I will be just referring to them as start and update) since we won't need these functions. A function carries out its block of code itself before handing control back to unity. This is due to the fact that code in unity doesn't run on a loop so it delegates its tasks.
+First thing we need to do is create some variables these being PlayerControls. Now this written like this:
+playerControls PLayerControls. The first word in this situation is what its referencing which is the Input system we created a moment ago. and the second word is the variable name within the code. (make sure the first word is spelt capitals and all exactly the same as the Input system)
+
+The next variable we need to create is the movement Input which is written like this:
+public Vector2 movementInput; This will allow the player to move along the X and Z axis within unity but not the Y since its a Vector2 not a 3 (if you added jump or flight earlier make it a vector 3 and make sure to do so for all vector2 that are in reference to movement) 
+
+next we will create the actaul movement Input.
+
+So first we have to create a function so that the code can be run. And since we want the code to be activated once a key has been pressed then it will be:
+private void OnEnable()
+{
+        if (PLayerControls == null)                                                                       
+        {
+            PLayerControls = new PlayerControls();
+            PLayerControls.PlayerMovement.WASD.performed += i => movementInput = i.ReadValue<Vector2>(); //WASD refers to the action with the green box
+        }
+
+        PLayerControls.Enable();
+
+    }
+
+PLayerControls.PlayerMovment.WASD.performed += i => movementInput = i.ReadValue<Vector2>(); calls upon the input system into giving the keybinds. This is the largest advantage the InputSystem has to the Input Manager as this is the only time the keys will have to be called and they are together.
+Meaning you don't have to write out GetKeyDowwn every time your trying to use a new key. Especially useful if your planning on porting the game over to other platforms as well since you can  addd the control bindings the same way.
+
+Since we have an enable we must have a disable function otherwise the script will always be running. To do this we would write:
+Private void OnDisable()
+{
+  PLayerControls.Disable()
+}
+
+for future use in other scripts we will add another function this one is so that all the inputs are linked to a single function making it so we don't have to type as much code later on.
+Public void HandleAllInputs()
+{
+  HandleMovementInput()
+}
+
+The reason this one is a public is so that it can be called upon in other scenes whereas private ones can't be called on, helping to reduce clutter in the inspector. Additionally the reason the privates can be called on in this block is because they are in the same script.
+Next we have to make it so that the movementInput actually has the correct correlation. To do this we need to create new variables. So lets head back up to the top of the script where the other variables should be and underneath them type out our new one. 
+The first variable is:
+public float verticalInput;
+the second one is:
+public float horizontalInput;
+
+right now that we have the  our new variables kets put them to work.
+
+underneath everything else we are going to put a new function. This being:
+private void HandleMovementInput()
+    {
+        verticalInput = movementInput.y;
+        horizontalInput = movementInput.x
+    }
+The reason for it being Y instead of a Z is that since we are currently working in vector2 Z isn't recognised (unless your in vector 3 in which case switch it to Z) this means that Y holds Z's position at the verti
+
+Press Crtl S to save that then go back into unity. Your will quickly realise their is a slight problem. We have a script but nothing to attach it to.
+To recitify this go to the Hierarchy and right click then move down and click create empty. Name this player. Repeat the last part but instead create a 3d object capsule.
+
+Afterward go to the inspector and click add component. Once you have done this search for a rigidbody. Rigidbody gives phycis to the gameObject it is attached to. Make sure that Intrepolate is set to Intrepolate and Collison Detection is set to Continous. Additionally freeze all three rotations our code will be doing them.
+
+Now drag and drop the Input manager onto the casuples inspector and edit the values under it in the inspector until your happy with it.
+
+STEP 3: PlayerLocomotion
+
+
+Once you have done this please create another C# script. Name this one what you like but this is the one that allows for movement and rotation. So I named my PlayerLocomotion.
+
+Note // means a comment (this has no effect on code and is useful for notes.) and due to the length of this script I will be using it to explain certain parts.
+
+Just like the last one delete start and update. Then write the variables:
+InputManager inputManager;  // This is calling the InputManager we just created.
+Vector3 moveDirection;  //since this script will also have a part of the cameras code written into it then vector3 is used here.
+Transform cameraObject; 
+Rigidbody playerRigidbody;
+
+public float movementSpeed = 7; 
+public float rotationSpeed = 15;
+
+With these variables written we can begin with the rest of the code.
+
+To begin we will want to write the function
+Private void Awake // what this means that this block of text will be called when the script is intialised
+{
+        inputManager = GetComponent<InputManager>(); // this calls the assigned InputManager rather than the script itself. This means you could put the Input Manager on multiple different things but the setting on the game object that this script and the Input Manager is attached will be the one called. Allowing you to customise each Input Manager
+        playerRigidbody = GetComponent<Rigidbody>(); //Same as the InputManager
+        cameraObject = Camera.main.transform; // this will call the camera with the Main camera (ehich you have as default.
+    }
+
+Next for future use we are going to write another function this one will be:
+public void HandleAllMovement() 
+    {
+        
+    }
+This once the other functions in this script are complete will have the functions inside to create a centralised and callable function.
+So lets create these functions to that they might be implemented in the HandleAllMovement 
+The first one we will make will handle the movement. So the function and block of text should look like:
+ private void HandleMovement()
+    {
+        moveDirection = cameraObject.forward * inputManager.verticalInput; // this will make it so that the player moves in the direction the character is facing.
+        moveDirection = moveDirection + cameraObject.right * inputManager.horizontalInput; // this will let us move left or right depending on the camera direction
+        moveDirection.Normalize(); // this keeps the camera direction the same allowing for the player to move to the sides without impacting the camera.
+        moveDirection.y = 0; 
+        moveDirection = moveDirection * movementSpeed;
+
+        Vector3 movementVelocity = moveDirection;
+        playerRigidbody.velocity = movementVelocity;
+    }
+
+Add the handle to the HandleAllMovement function so that it looks like
+public void HandleAllMovement() 
+    {
+        HandleMovement()
+    }
+
+The next function we want to create is so that we can have the player character rotate (will be difficullt to see in a capsule so check inspector)
+To do this we must type:
+ private void HandleRotation()
+    {
+        Vector3 targetDirection = Vector3.zero;
+        
+        targetDirection = cameraObject.forward * inputManager.verticalInput; 
+        targetDirection = targetDirection + cameraObject.right * inputManager.horizontalInput;
+        targetDirection.Normalize();
+        targetDirection.y = 0;
+
+        if (targetDirection == Vector3.zero)
+            targetDirection = transform.forward;
+
+        Quaternion targetRotation = Quaternion.LookRotation(targetDirection);//  Quaternions are unitys basic way to work in rotation.
+        Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+        transform.rotation = playerRotation;
+    }
+
+Add this to HandleAllMovement like we did with HandleMovement
+
+Now then their is one last script that must be created so save this one then create a new script.
+
+STEP 4: PlayerManager
+This script is to bring it all together. 
+ unlike each of the other scripts delete only start.
+Then we create some variables. As such:
+InputManager inputManager;
+CameraManager cameraManager; // this will be used in the camera tutorial so comment it out (what the double / do)
+PlayerLocomotion playerLocomotion;
+
+So lets create our function:
+private void Awake()
+    {
+        inputManager = GetComponent<InputManager>();
+        cameraManager = FindObjectOfType<CameraManager>();
+        playerLocomotion = GetComponent<PlayerLocomotion>();
+
+    }
+
+ private void Update() // this will update every frame but can be broken
+    {
+        inputManager.HandleAllInputs();
+    }
+
+
+ private void FixedUpdate() //This means that the every frame this will update no matter what.
+    {
+        playerLocomotion.HandleAllMovement();
+    }
+This make use of the handles we created previously and have setup so that they are continously working.
+
+
+Once you have done this then you have typed all the code needed for player movement now you only need camera movement. But before that be sure to assign all these scripts to the player capsule.

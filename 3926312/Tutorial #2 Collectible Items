@@ -1,0 +1,65 @@
+Step 1: Create a collectible item
+
+Right-click in the Assets window, select "Create," and choose "Sprite" to create a 2D sprite for your collectible item.
+
+Import or design an image for your collectible item and assign it to the sprite renderer component of the new created sprite.
+
+Step 2: Set up the collectible item
+
+Drag the sprite into the scene to create a GameObject.
+
+Attach a Collider component to the GameObject
+(Box Collider 2D for 2D games or Mesh Collider for 3D games). 
+This collider will define the area where the player can collect the item.
+
+Step 4: Create a script for the collectible item
+
+Right-click in the Assets window, select "Create," and choose "C# Script."
+Name the script something like "CollectibleItem" and double-click to open it in your preferred code editor.
+In the script, you'll need to create a method for handling the collection. Here's a basic example:
+
+https://github.com/Seckosaho12/Little-Runner/issues/4#issue-2023877161
+
+Step 5: Attach the script to the collectible item
+
+Drag and drop the script onto the GameObject with the collectible item in the Inspector window.
+
+Step 6: Tag your player
+Select your player GameObject in the scene.
+In the Inspector window, find the "Tag" dropdown, and assign a tag (e.g., "Player") to your player GameObject.
+
+
+Step 7: Testing
+Press the play button in Unity and test your game. When the player GameObject (with the specified tag) 
+collides with the collectible item, it should trigger the collection logic.
+
+This is the completed script for my collectible item. 
+
+https://github.com/Seckosaho12/Little-Runner/issues/5#issue-2023884379
+
+Class Definition:
+
+The script defines a new class named ItemCollector that inherits from MonoBehaviour. In Unity, scripts that control game behavior are typically derived from MonoBehaviour.
+
+Variables:
+
+coins: An integer variable to keep track of the number of collected coins.
+coinsText: A reference to a UI Text component that will display the number of collected coins. It's marked with [SerializeField] so that it can be set in the Unity Editor.
+collectionSound: A reference to an AudioSource component that will play a sound when a coin is collected. Also marked with [SerializeField] for editor visibility.
+
+OnTriggerEnter Method:
+
+Unity calls this method automatically when the GameObject this script is attached to collides with another GameObject.
+It checks if the colliding GameObject has a tag "Coin" using CompareTag.
+If a collision with a coin occurs:
+Destroys the coin GameObject.
+Increments the coins count.
+Updates the UI Text to display the new number of collected coins.
+Plays a sound using the AudioSource component.
+
+
+
+
+
+
+

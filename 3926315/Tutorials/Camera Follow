@@ -1,0 +1,22 @@
+# 1.Camera Follows Character Object 
+
+create a new c# script and name it 'CameraFollow'
+
+attach it to the main camera in the heiarchy 
+
+then double click to open the c# you created
+
+#2. creating the code 
+
+public Transform target;
+public Vector3 offset;
+
+    void Update()
+    {
+        transform.position = target.position + offset;
+    }
+}
+
+firstly we add a public transform so we can change the positon of the camera within the unity engine. we also add a xyz offset so we can position the camera as we'd like to look on the character
+
+the after void start we write that after the frame updates transform is the position of the target(in this case the camera) + the offset

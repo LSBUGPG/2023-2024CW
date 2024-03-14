@@ -1,0 +1,298 @@
+This is a 3rd person movement tutorial making use of the unity input system add on. (The code was taken from Sebastian Graves  https://www.youtube.com/watch?v=NeuxiCn_zR8&list=PLD_vBJjpCwJsqpD8QRPNPMfVUpPFLVGg4&index=5)
+
+
+IMPORTANT NOTICE: This tutorial assumes you haven't read any of the other tutorials. (However it is highly recommended you start at movement tutorial)
+
+Step 1 Setting up the camera Objects
+First thing you need to do is add an empty object in the hierarchy you can do this by right clicking in the hierarchy and clicking create empty. Name this one CameraManager 
+The next thing you will want to do is create another empty object which you should name CameraPivot drag this one over the CameraManager and let go. The reason behind this is to set the CameraManager as the parent. 
+Then drag MainCamera over the CameraPivot and drop so that CameraPivot is the parent of the maincamera. 
+
+STEP 2 setting up the input system (if you came from the movement system tutorial look for 2.5)
+The very first thing you want to do is open the unity project and go to the windows tab at the top and select package manager. This is so that we may install the inputsystem that we will be using for this tutorial. 
+
+Once in package manager:
+Make sure at the top of the manager it says package Unity Registry instead of package in project.
+Then using the search bar search for InputSystem. once you have found it click install which resides in the bottom right of the window. Then wait until it has finished.
+
+Outside of package manager:
+Once it has right click within your libary (this is within your project window) and click/hover on create. Once you have done that you move your cursor down until you get to InputActions which you click. You may name it however you wish but I called it playerControls.
+additionally right click within your libary  and click/hover create then click Folder and name this one scripts. then drag and drop playerControls into it.
+
+within the Input system:
+double click on playerControls this will open up a popup window. In which you will see that the Input system is split into three different catergories. 
+The first being action map: This is the overarching input in which acts as the connection between the actions. This is effectively the what is happening since this is used to combine all the actions into something cohesive and effective.
+The second being actions: This is where we will be assigning our keys/controls in and this area is effectively the where/when it happens since this is where the keys inputs will be registered and when those keys are pressed these actions will be called on.
+The third section are the action properties:This is where you will assign how the actions work and what type of actions will be used. Think of this as the why and how since this is the reason why the input system works whilst how the key are assigned to useful positions.
+
+So the first thing you will want to do is go to the action map section and click on the cross. This will add a new action map. You can name it whatever you like but remember this is what is happening. I named mine PlayerMovement.
+As you would have noticed when you click on the cross the actions and actions properties also gained some new additions. Firstly click on the drop down arrow(arrow facing down) on the new action here you will see a action called <no binding>. Delete it. The reason why is because this is their is a more effective method for our bindings.
+Once you have deleted the binding double click on the action and rename it whatever you like. I named mine Camera. Once you have finished renaming it go to the action properties section. 
+Change action type to pass through and then control type to vector2 since in this tutorial we will only be working on 2 axis and not all three.
+Once you have done this click on the cross and add binding. Then click on the up binding and go to properties (Do NOT click T) click the empty bar then search mouse (look for the one with delta).
+Once you have completed that close the Inputsystem whilst making sure to save it. Then on the right hand of your screen click the tickbox for generate a C# class. This will generate a C# script that you do not need to open for this tutorial.
+
+STEP 2.5  Input System (If you came from Movement system)
+Go into your InputSystem window and at the top of the actions section press the cross. This will create the new action which will be named Camera. set the action type to pass through and control type to vector 2. This is for the same reason as the movement.
+Then instead of deleting your sole binding set it to mouse (delta)
+
+
+Step 3 set up the character (ignore if you came from movement tutorial)
+Create another empty object and name it player (if you already have a player character feel free to ignore this step and advance one) then use the same process again to create another game object but instead of it being empty click 3d object capsule.
+Once the capsule is in your hierarchy click on it and click on add component in the inspector use search for a rigidbody and assign it. Once you have done that ensure that Intrepolate is set to Intrepolate and Collision Detection is set to continous. Additionally freeze all rotations.
+
+(please note this tutorial will not be providing a movement script please use the movement tutorial)
+
+step 4 positioning the camera
+Once you have dragged MainCamera over the CameraPivot and drop so that CameraPivot is the parent of the maincamera. You have to move these into the capsule on in the hierarchy but in scene then reset their transform by right-clicking on the transform bar in the inspector. This can be quite finicky.
+Once the camera (I will be referring to all three as the camera unless I name a specific one) transform is at 0,0,0 (position) then click on the cameraPivot select the y position in the inspector and increase or decrease it for the height you want your 3rd person camera to be at. 
+After you have decided on the you height must decide on the distance. To do this click on maincamera and using the Z transform move it how far back you want it to be.  This will likely take multiple attempts.
+
+
+Step 5 Input Manager (still relevant to people from movement tutorial do not have to create new functions but instead put modified lines alongside the previous one)
+This is the script in which we will be calling the Input system (Please note evrey time you create a variable you must put it on a new line)
+
+Within the scripts folder: 
+So create a new C# script the same way you created a folder previously but instead click on  C# scripts. Name this one InputManager (spacing and capitalisation is important)
+open this script in visual studio by double clicking it.
+Delete public void start and public void update (you will do this for each script as well so I will be just referring to them as start and update) since we won't need these functions. A function carries out its block of code itself before handing control back to unity. This is due to the fact that code in unity doesn't run on a loop so it delegates its tasks.
+First thing we need to do is create some variables these being PlayerControls. Now this written like this:
+playerControls PLayerControls. The first word in this situation is what its referencing which is the Input system we created a moment ago. and the second word is the variable name within the code. (make sure the first word is spelt capitals and all exactly the same as the Input system)
+
+The next variable we need to create is the movement Input which is written like this:
+public Vector2 cameraInput;     This will allow the player to move along the X and Z axis within unity but not the Y since its a Vector2 not a 3 (if you added jump or flight earlier make it a vector 3 and make sure to do so for all vector2 that are in reference to movement) 
+
+next we will create the actaul movement Input.
+
+So first we have to create a function so that the code can be run. And since we want the code to be activated once a key has been pressed then it will be:
+private void OnEnable()
+{
+
+}
+
+ since we haven't enabled the player controls by giving the keybinds in the Input System a purpose we would require a null in order to then use the player controller. What this would like added to the previous code is this:
+ private void OnEnable()
+{
+ if (PLayerControls == null)                                                                       
+        {
+           
+        }
+}
+
+   However we now have an if statement that has no purpose and for player controls and more importantly the input system we must assign them. Which means that the Input system/ player controls will end up equalling eachother so that the earlier created variable has value now attached.
+ private void OnEnable()
+{
+ if (PLayerControls == null)                                                                       
+        {
+           PLayerControls = new PlayerControls();
+        }
+}
+
+now we need to make it so that the actions assigned within the Input system know the speed to operate at. which when added to the if statement looks like this:
+ private void OnEnable()
+{
+ if (PLayerControls == null)                                                                       
+        {
+           PLayerControls = new PlayerControls();
+           PLayerControls.PlayerMovment.Camera.performed += i => cameraInput = i.ReadValue<Vector2>(); 
+        }
+}
+
+
+Since we have an enable we must have a disable function otherwise the script will always be running. To do this we would write:
+Private void OnDisable()
+{
+  PLayerControls.Disable()
+}
+
+for future use in other scripts we will add another function this one is so that all the inputs are linked to a single function making it so we don't have to type as much code later on.
+Public void HandleAllInputs()
+{
+  HandleMovementInput()
+}
+
+The reason this one is a public is so that it can be called upon in other scenes whereas private ones can't be called on, helping to reduce clutter in the inspector. Additionally the reason the privates can be called on in this block is because they are in the same script.
+Next we have to make it so that the cameraInput actually has the correct correlation. To do this we need to create new variables. So lets head back up to the top of the script where the other variables should be and underneath them type out our new one. 
+The first variable is:
+public float cameraInputY;
+the second one is:
+public float cameraInputX;
+
+right now that we have the  our new variables kets put them to work.
+
+underneath everything else we are going to put a new function. This being:
+private void HandleMovementInput()
+    {
+        cameraInputY = cameraInput.y;
+        cameraInputX = cameraInput.x
+    }
+The reason for it being Y instead of a Z is that since we are currently working in vector2 Z isn't recognised (unless your in vector 3 in which case switch it to Z) this means that Y holds Z's position at the verti
+
+Press Crtl S to save that then go back into unity. 
+
+
+Step 6 cameraManager + variables
+Create another script and call it CameraManager. Once you have opened camera manager delete both the public void start and public void update.
+Now that we have a clear C# file we can begin writing the variables.
+double / refers to a comment these have no effect on code but are useful for notes I will be using them to explain some parts.
+The variables you will have to write are
+InputManager InputManager;   //This calls on the InputManager script we just created which in turn get the keybind/bind.
+
+public Transform targetTransform; //The object the camera will follow
+public Transform cameraPivot; //The object the camera uses to pivot 
+public Transform cameraTransform; //The transform of the actual camera object in the scene 
+public LayerMask collisionLayers; // this is here so that you can collide with multiple things
+private float defaultPosition;
+private Vector3 cameraFollowVelocity = Vector3.zero;
+private Vector3 cameraVectorPosition;
+
+public float cameraCollisionOffset = 0.2f; //how much force the camera will bounce. This is so that the camera will not clip through walls allowing the playable character tp remain visible.
+public float minimumCollisionOffSet = 0.2f;
+public float cameraCollisionRadius = 0.2f;
+public float cameraFollowSpeed = 0.2f;
+public float cameraLookSpeed = 2;
+public float cameraPivotSpeed = 2;
+
+public float lookAngle; // this is so you can look up and down
+public float pivotAngle; //this is so you can look left to right
+public float minimumPivotAngle = -35; //what stops you from doing a full 360. Since this would be difficult to control and would also likely let the player see under the map.
+public float maximumPivotAngle = 35;
+
+Step 7 CameraManager + Awake
+Now that we have our variables that will be needed, we need to create the code that will assign them.
+
+The first function we will be creating is:
+public void Awake()
+{
+   InputManager = FindObjectOfType<InputManager>();    
+   targetTransform =  FindObjectOfType <PlayerManager>().transform; // this is looking for the Player character.
+   defaultPosition = cameraTransform.localPosition.z; // this set the default position to the Cameras position within the unity editor. due to the fact that Awake is called the moment the script is intialised.
+}
+
+With the Awake function being used to call the required pieces into the script. This allows us to avoid writing more code later on and helps to keep everything shorter. 
+
+
+Step 8 PlayerManager (If you have done the movement tutorial only add the lines related to Camera.)
+The playerManager acts as a central hub for all of the inputs, movement and camera movement.
+Now then you may have noticed that second line within the awake function attempts to call upon a script that doesn't exist. Something we will be changing now. Create a new C# script and name it PlayerManager, make sure it spelt the exact same way.
+
+Open it and we will create the variables. These variables are: 
+InputManager inputManager;
+CameraManager cameraManager;
+
+next we need to put these to use so lets create a function.
+ private void Awake()
+    {
+        
+    }
+
+then we write out the variables so that they are finding upon their functions. We do it this way so that the data required but in a different script is retrieved before everything else is processed. 
+Otherwise it would require recreating that line of code entirely.
+After the variables are written out it should look like this:
+ private void Awake()
+    {
+        inputManager = GetComponent<InputManager>();
+        cameraManager = FindObjectOfType<CameraManager>();
+        
+    }
+
+Next we want to create the Inputs section of the PlayerManager. Due to the fact that we need to be constantly recieving the data of what inputs are being used, a update function would serve best.
+So for this one write:
+private void Update()
+{
+        inputManager.HandleAllInputs();
+}
+
+The next section we want to write would be movement but since this tutorial doesn't provide movement you will have to write it alone. Its almost Idenictal to the first one however instead of private void update() it is 
+private void FixedUpdate()
+
+so an example would be 
+
+PlayerMovement PlayerMovement;
+
+private void FixedUpdate()
+{
+        playerMovement.HandleAllMovement
+}
+
+The reason for fixed is that we only want to be update of the keybinds once and after that  it updating would cause technical issues with gameplay such as keys randomly being swapped. 
+
+The next section is the camera movement 
+private void LateUpdate()
+    {
+        cameraManager.HandleAllCameraMovement();
+    }
+Now we want it to be a LateUpdate so that it responds to the character movements rather than taking the lead and potentially surpassing the character in speed.
+
+STEP 9 HandleAllCameraMovement
+head back to the CameraManager. Seeing as how we just in a function with HandleAllCameraMovement(); we will now add it to this script. Although its components have yet to be written either.
+To write the function type out:
+public void HandleAllCameraMovement()
+    {
+        FollowTarget();
+        RotateCamera();
+        HandleCameraCollisions();
+    }
+This will be the only public function within this script since its the only one meant to be called on. As the difference between public and private is that public can be called on by other scripts whilst private cannot.
+
+STEP 10 FollowTarget
+So we need this camera to actually follow the player otherwise it will be left behind and the player will be playing the game blind.
+So to do this we add another function called:
+private void FollowTarget()
+    {
+
+        Vector3 targetPosition = Vector3.SmoothDamp(transform.position, targetTransform.position, ref cameraFollowVelocity, cameraFollowSpeed); // this finds the in relation to our position and moves us over there with the Velocity and speed. However to make this aesthically appealling we apply smoothdamp which makes the process cleaner.
+        
+        transform.position = targetPosition; //moving the camera to the player posistion
+    }
+
+STEP 11 rotating the camera
+now the camera is following the player we are going to need to rotate the camera for corners and as a general quality of life feature.
+To do this we start of with the function:
+Private void RotateCamera()
+{
+       Vector3 rotation; //this means we won't have to repeat Vector3 each time we type rotation
+       Quaternion targetRotation //this means we won't have to repeat Quaternion each time we type targetRotation  
+       
+        lookAngle = lookAngle + (InputManager.cameraInputX * cameraLookSpeed); // this calculates the lookAngle
+        pivotAngle = pivotAngle - (InputManager.cameraInputY * cameraPivotSpeed); // this calculates the pivotAngle
+        pivotAngle = Mathf.Clamp(pivotAngle, minimumPivotAngle, maximumPivotAngle); //this prevent the pivotAngle from going over the set minimum and maximum angle 
+
+        rotation = Vector3.zero;
+        rotation.y = lookAngle; //stating the lookAngle affects the rotation on the Y axis
+        targetRotation = Quaternion.Euler(rotation); // because we put Quaternion targetRotation earlier it means we don't have to put Quaternion now
+        transform.rotation = targetRotation;  //the line that rotates it 
+
+        rotation = Vector3.zero;
+        rotation.x = pivotAngle;
+        targetRotation = Quaternion.Euler(rotation);
+        cameraPivot.localRotation = targetRotation; //local rotation only affects the game object rotation no the world rotation.
+
+}
+
+STEP 12 Camera Collision
+Now that we have added two of the three functions with the HandleAllCameraMovements its time to do the third and final one.
+The camera Collision refers to the camera bouncing of a wall rather than clip through it preventing the player from seeing. An essential for a 3rd person game.
+To do this you start it like the rest by making a function:
+private void HandleCameraCollisions()
+    {
+        float targetPosition = defaultPosition; 
+        RaycastHit hit; //RaycastHit is used to get data back from a raycast
+        Vector3 direction = cameraTransform.position - cameraPivot.position;
+        direction.Normalize();
+
+        if (Physics.SphereCast(cameraPivot.transform.position, cameraCollisionRadius, direction, out hit, Mathf.Abs(targetPosition), collisionLayers)) //of the SphereCast hits soemething with a collider it will register it
+            float distance = Vector3.Distance(cameraPivot.position, hit.point); 
+            targetPosition =- (distance - cameraCollisionOffset); //this calculates the distance between the collider the SphereCast hit and the player model
+        }
+
+        if (Mathf.Abs(targetPosition) < minimumCollisionOffSet) 
+        {
+            targetPosition = targetPosition - minimumCollisionOffSet; //calculates the minimum required bounce.
+        }
+
+        cameraVectorPosition.z = Mathf.Lerp(cameraTransform.localPosition.z, targetPosition, 0.2f); //calulates where the camera needs to be in relation to the minimum required bounce
+        cameraTransform.localPosition = cameraVectorPosition; //changes camera position.
+    }
+
+And there you go, you now have a working 3rd person camera.

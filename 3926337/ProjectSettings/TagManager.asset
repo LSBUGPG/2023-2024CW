@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Enemy
+  - WhatIsGround
+  - Item
+  - Pickable
+  - Door
+  - Light
+  - PRDoor
+  - Button
+  - SpotLight
+  - StartDoor
+  - KeySt
+  - KeyPr
+  - Pills
+  - Reach
+  - Batteries
+  - Flashlight
+  - InteractionLayer
+  - keypad
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Player
+  - Obstacle
+  - whatIsGround
+  - Item
+  - Enemy
+  - PRDoor
+  - WALL
+  - Pills
+  - InteractionLayer
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0

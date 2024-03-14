@@ -1,0 +1,17 @@
+Prototype Playthrough Video
+https://youtu.be/37UPnEaWRBI
+
+Prototype Source Code
+https://github.com/august-anumba/First-Person-Movement-Based-Game-Prototype.git
+
+#1 Tutorial (w/ learning journal, task log and source code)
+https://github.com/august-anumba/First-Person-Camera-Controller-Tutorial
+
+#2 Tutorial (w/ learning journal, task log and source code)
+https://github.com/august-anumba/Horizontal-Movement-Controller-Tutorial
+
+#3 Tutorial (w/ learning journal, task log and source code)
+https://github.com/august-anumba/Vertical-Movement-Controller-Tutorial
+
+#4 Tutorial (w/ learning journal, task log and source code)
+https://github.com/august-anumba/Advanced-Movement-Controller-Tutorial

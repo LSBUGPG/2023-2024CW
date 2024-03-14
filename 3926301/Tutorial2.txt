@@ -1,0 +1,54 @@
+TUTORIAL 2 - CAMERA FOLLOW
+
+To create a script that allows the camera to follow the player, we first need to add a c# script to the main camera by selecting Add component > New script > and naming the script.
+
+We can store the players scale, position and rotation using the transform variable, this is useful as we can now move the camera while using the player as a reference.
+this is done by:
+
+public Transform player;
+
+// To make sure we are referencing our specific player we need to drag our player from under the hirarchy tab in Unity into our player variable into our c# script component in the main camera.
+
+To follow our player we will need to write down:
+
+	public Transform player;
+
+	void Update()
+    {
+        transform.position = player.position;
+    }
+
+// The function "transform.position" references the current location of the camera where the term "position" specifies what aspect of "transform" we are focusing on.
+// Making the cameras position = to the players position means the camera now follows the player.
+
+However we now can no longer see the player as we are positioned inside the cube, which means we are essentially in a first person perspective.
+To fix this we need to add a vector variable to offset our camera away from our player, which can be done like this
+
+
+    public Transform player;
+    public Vector3 offset;
+
+    void Update()
+    {
+        transform.position = player.position + offset;
+    }
+
+// In the Unity launcher we can edit the position of the camera relative to the player by changing the values under "offset", vector 3 allows us to edit 3 different values, in this case we are editing the X, Y and Z position of the camera.
+// This transformation is done in relation to the player as seen in "player.position + offset" where we changed the position of the camera whilst also keeping it connected to the player.
+
+
+Final script:
+
+using UnityEngine;
+
+public class FollowPlayer : MonoBehaviour
+{
+    public Transform player;
+    public Vector3 offset;
+
+    // Update is called once per frame
+    void Update()
+    {
+        transform.position = player.position + offset;
+    }
+}

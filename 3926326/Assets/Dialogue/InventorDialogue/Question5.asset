@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6f1373463114924db3e3470ffe558ee, type: 3}
+  m_Name: Question5
+  m_EditorClassIdentifier: 
+  dialogue:
+  - Ah-! That's- that's right! You got it! The field test was a success!
+  - Ah, but, I still have one more question for you. Don't worry, there's no wrong
+    answer here.
+  - I'm just... curious, is all.
+  - Doubtless you've noticed, you percieve things differently to the rest of us,
+    don't you?
+  - We're on a lush, green island. There's flowing waters surrounding us, green grass
+    beneath our feet. Everyone here looks different in their own wonderful way.
+  - But you can't see that, can you? You don't even know what I look like.
+  - I suppose my question is... how does it make you feel? To view the world so differently
+    when compared to the rest of us?
+  responses:
+  - responseText: I feel fine.
+    dialogueAsset: {fileID: 11400000, guid: a10f51a63124d5b4dafab316427ae29e, type: 2}
+  - responseText: I feel scared.
+    dialogueAsset: {fileID: 11400000, guid: a10f51a63124d5b4dafab316427ae29e, type: 2}
+  - responseText: I feel unique.
+    dialogueAsset: {fileID: 11400000, guid: a10f51a63124d5b4dafab316427ae29e, type: 2}
+  - responseText: I don't know.
+    dialogueAsset: {fileID: 11400000, guid: a10f51a63124d5b4dafab316427ae29e, type: 2}

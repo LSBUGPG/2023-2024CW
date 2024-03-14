@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6f1373463114924db3e3470ffe558ee, type: 3}
+  m_Name: WhatsArt
+  m_EditorClassIdentifier: 
+  dialogue:
+  - Ah, quite that complex question, that is. A better question would be what isn't
+    art!
+  - Art is many things, my dear lad! It is paint on a canvas, it is clay sculpted
+    to whichever form you choose.
+  - It is the world around you, it is the song of beautiful songbirds, it is the
+    breeze caressing your face, it is the grass touching your toes.
+  - It is The stream roaring past... The stream... The... hm...
+  - He's... always sitting by there, you know. Every day. I pretend to paint the
+    landscape, but really... I...
+  - Ah-! I've... I've said too much.
+  - '*The painter goes quiet.'
+  - '*You don''t know what paint or a canvas is. You''ve never heard of clay before.'
+  - '*You don''t know what a stream is, you don''t hear any birds and you don''t
+    see any grass.'
+  - '*You still don''t know what art is.'
+  responses: []

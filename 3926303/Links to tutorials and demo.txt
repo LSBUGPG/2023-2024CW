@@ -1,0 +1,5 @@
+Tutorial 1 - Smooth Camera - https://www.youtube.com/watch?v=8GTf1zxGJtI
+Tutorial 2 - Player Interact Script - https://www.youtube.com/watch?v=u82GAEUIU2I
+Tutorial 3 - Door Script - https://www.youtube.com/watch?v=rHvn1AgyskA
+Tutorial 4 - Enemy Script - https://www.youtube.com/watch?v=fNDGSMhJ5bg
+Gameplay And Summary - https://www.youtube.com/watch?v=hypbVAkbHmo

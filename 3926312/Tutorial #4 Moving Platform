@@ -1,0 +1,31 @@
+In this script we will make moving platforms that will make our game a bit more cahllenging for our player
+
+These platforms they move from left tpo right and up and down, in this case we will have to put waypoint in eeither  side you want the platform to move to
+
+https://github.com/Seckosaho12/Little-Runner/issues/8#issue-2024014520
+
+THIS IS HOW THE SCRIPT IS DONE STEP BY STEP, I WILL BE EXPLAINGI IN DETAIL THE SCRIPT FOR THIS COMPONENT.
+
+Class Definition:
+The script defines a class named StickyPlatform that inherits from MonoBehaviour. This script is likely attached to a game object in Unity.
+
+OnCollisionEnter Method:
+The OnCollisionEnter method is called when the object this script is attached to collides with another object.
+It checks if the colliding object has the name "Player."
+If true, it sets the player object's parent to be the object this script is attached to
+(transform). This means the player becomes a child of the platform.
+
+OnCollisionExit Method:
+The OnCollisionExit method is called when the collision between the object this script is attached to and another object ends.
+It checks if the object leaving the collision is the player (based on the name).
+If true, it sets the player object's parent to be null, meaning it no longer has a parent. 
+This typically means the player is no longer considered a child of the platform.
+
+In simpler terms, this script creates a "sticky" behavior between a platform and the player in a game. 
+When the player collides with the platform, the player becomes a child of the platform, sticking to it
+When the player leaves the platform, the script removes the parent-child relationship, 
+allowing the player to move independently again. This kind of mechanism is commonly used for platforms that should carry or stick to the player while moving.
+
+
+
+
